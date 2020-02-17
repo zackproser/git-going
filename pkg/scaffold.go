@@ -59,6 +59,14 @@ func Create(name, slug string, log *logrus.Logger) error {
 		return addFilesErr
 	}
 
+	if commitErr := gitCommit(slug, "Init to win it"); commitErr != nil {
+		log.WithFields(logrus.Fields{
+			"Error":   commitErr,
+			"Context": "Committing new files to git",
+		}).Debug("committing files to git failed")
+		return commitErr
+	}
+
 	log.Debug(fmt.Sprintf("Successfully created %s", name))
 	return nil
 }
@@ -88,12 +96,22 @@ func copyFile(src, dst string) (int64, error) {
 	return nBytes, err
 }
 
+func gitCommit(fp, commitMsg string) error {
+	cmdString := []string{"commit", "-m", commitMsg}
+	cmd := exec.Command("git", cmdString...)
+	cmd.Dir = fp
+
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("git output: %v, stderr: %s", out, err.Error())
+	}
+	return nil
+}
+
 func gitAddFiles(fp string) error {
 	cmdString := []string{"add", "README.md", "LICENSE"}
 	// Execute git add from within the target directory
 	cmd := exec.Command("git", cmdString...)
 	cmd.Dir = fp
-	fmt.Println(cmd.String())
 
 	if out, err := cmd.CombinedOutput(); err != nil {
 		return fmt.Errorf("git output: %s, stderr: %s", out, err.Error())
