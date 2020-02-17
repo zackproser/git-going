@@ -6,8 +6,6 @@ import (
 	"os"
 )
 
-
-
 func Create(name, slug string) error {
 	if collisionErr := filenameCollisionCheck(slug, name); collisionErr != nil {
 		return collisionErr
