@@ -4,20 +4,22 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 var (
 	projectName string
 	projectSlug string
+	log         = logrus.New()
 )
 
 var rootCmd = &cobra.Command{
-	Use: "gitgoing",
+	Use:   "gitgoing",
 	Short: "Git-going is a Github repository scaffolding tool",
-	Long: "Creates and configures new local and remote repositories",
+	Long:  "Creates and configures new projects",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Gitgoing command running...")
+		log.Debug("gitgoing command running...")
 	},
 }
 
@@ -30,7 +32,10 @@ func Execute() {
 
 func init() {
 
-	rootCmd.PersistentFlags().StringVarP(&projectName, "name", "n",  "", "The human legible name for your new project (Used in titles, etc)")
+	log.SetLevel(logrus.DebugLevel)
+	log.SetOutput(os.Stdout)
+
+	rootCmd.PersistentFlags().StringVarP(&projectName, "name", "n", "", "The human legible name for your new project (Used in titles, etc)")
 	rootCmd.PersistentFlags().StringVarP(&projectSlug, "slug", "s", "", "project slug (for URLs / Directory names)")
 
 	rootCmd.AddCommand()

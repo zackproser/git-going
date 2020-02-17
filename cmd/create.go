@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/spf13/cobra"
 	scaffold "github.com/zackproser/git-going/pkg"
 )
@@ -27,9 +29,9 @@ func convertProjectNameToSlug(n string) string {
 }
 
 var createCmd = &cobra.Command{
-	Use: "create",
+	Use:   "create",
 	Short: "Create a new project",
-	Long: "Creates local and remote git repos, scaffolds files, runs git config",
+	Long:  "Creates local and remote git repos, scaffolds files, runs git config",
 	Run: func(cmd *cobra.Command, args []string) {
 		if projectName == "" {
 			fmt.Println("You must provide a unique project name to create a new project")
@@ -39,8 +41,13 @@ var createCmd = &cobra.Command{
 		// to a suitable slug
 		if projectSlug == "" {
 			projectSlug = convertProjectNameToSlug(projectName)
-			fmt.Println("Converted projectSlug: ", projectSlug)
-			scaffold.Create(projectName, projectSlug)
+			log.Debug(fmt.Sprintf("Converted %s to slug: %s", projectName, projectSlug))
+			scaffoldErr := scaffold.Create(projectName, projectSlug, log)
+			if scaffoldErr != nil {
+				log.WithFields(logrus.Fields{
+					"Error": scaffoldErr,
+				}).Debug("Error scaffolding new project")
+			}
 		}
 	},
 }
