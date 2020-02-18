@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	//A valid GitHub Personal access token
-	GITHUB_API_TOKEN string
+	// GithubAPIToken must be a valid GitHub Personal access token
+	GithubAPIToken string
 )
 
 func init() {
@@ -18,7 +18,7 @@ func init() {
 	if !ok {
 		panic("Must set GIT_GOING_GITHUB_TOKEN with valid GitHub API token")
 	}
-	GITHUB_API_TOKEN = val
+	GithubAPIToken = val
 }
 
 // CreateRepo makes an API into GitHub to create a new
@@ -27,7 +27,7 @@ func CreateRepo(name string) (*github.Repository, error) {
 
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: GITHUB_API_TOKEN},
+		&oauth2.Token{AccessToken: GithubAPIToken},
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
