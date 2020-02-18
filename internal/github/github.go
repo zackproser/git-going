@@ -10,7 +10,6 @@ import (
 
 var (
 	GITHUB_API_TOKEN string
-	client           *github.Client
 )
 
 func init() {

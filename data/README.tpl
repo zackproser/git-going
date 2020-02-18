@@ -1,4 +1,4 @@
-# Target Project Name 
+# {{ .ProjectName }}
 
 # Overview 
 

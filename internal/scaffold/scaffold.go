@@ -3,9 +3,7 @@ package scaffold
 import (
 	"errors"
 	"fmt"
-	"io"
 	"os"
-	"os/exec"
 
 	"github.com/sirupsen/logrus"
 )
@@ -35,19 +33,18 @@ func Create(name, slug string, log *logrus.Logger) error {
 		return gitInitErr
 	}
 
-	if _, readmeErr := copyFile("./data/README.md", fmt.Sprintf("./%s/README.md", slug)); readmeErr != nil {
+	if readmeErr := renderReadmeFile(name, slug); readmeErr != nil {
 		log.WithFields(logrus.Fields{
 			"Error":   readmeErr,
-			"Context": "Copying readme file template into target repository",
-		}).Debug("copying README file failed")
-		return readmeErr
+			"Context": "Rendering README template file to repo",
+		}).Debug("renderReadmeFile failed")
 	}
 
-	if _, licenseErr := copyFile("./data/LICENSE", fmt.Sprintf("./%s/LICENSE", slug)); licenseErr != nil {
+	if licenseErr := renderLicenseFile(slug); licenseErr != nil {
 		log.WithFields(logrus.Fields{
 			"Error":   licenseErr,
-			"Context": "Copying LICENSE file template into target repository",
-		}).Debug("copying LICENSE file failed")
+			"Context": "Rendering LICENSE template file to repo",
+		}).Debug("renderLicensefile failed")
 		return licenseErr
 	}
 
@@ -68,84 +65,6 @@ func Create(name, slug string, log *logrus.Logger) error {
 	}
 
 	log.Debug(fmt.Sprintf("Successfully created %s", name))
-	return nil
-}
-
-func copyFile(src, dst string) (int64, error) {
-	sourceFileStat, err := os.Stat(src)
-	if err != nil {
-		return 0, err
-	}
-
-	if !sourceFileStat.Mode().IsRegular() {
-		return 0, fmt.Errorf("%s is not a regular file", src)
-	}
-
-	source, err := os.Open(src)
-	if err != nil {
-		return 0, err
-	}
-	defer source.Close()
-
-	destination, err := os.Create(dst)
-	if err != nil {
-		return 0, err
-	}
-	defer destination.Close()
-	nBytes, err := io.Copy(destination, source)
-	return nBytes, err
-}
-
-func PushRepo(fp string) error {
-	cmdString := []string{"push", "origin", "master"}
-	cmd := exec.Command("git", cmdString...)
-	cmd.Dir = fp
-
-	if out, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git output %v, stderr: %v", out, err.Error())
-	}
-	return nil
-}
-
-func AddRemoteOrigin(fp, url string) error {
-	cmdString := []string{"remote", "add", "origin", url}
-	cmd := exec.Command("git", cmdString...)
-	cmd.Dir = fp
-
-	if out, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git output: %v, stderr: %v", out, err.Error())
-	}
-	return nil
-}
-
-func gitCommit(fp, commitMsg string) error {
-	cmdString := []string{"commit", "-m", commitMsg}
-	cmd := exec.Command("git", cmdString...)
-	cmd.Dir = fp
-
-	if out, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git output: %v, stderr: %s", out, err.Error())
-	}
-	return nil
-}
-
-func gitAddFiles(fp string) error {
-	cmdString := []string{"add", "README.md", "LICENSE"}
-	// Execute git add from within the target directory
-	cmd := exec.Command("git", cmdString...)
-	cmd.Dir = fp
-
-	if out, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git output: %s, stderr: %s", out, err.Error())
-	}
-	return nil
-}
-
-func initializeGitRepo(fp string) error {
-	cmd := exec.Command("git", "init", fp)
-	if err := cmd.Run(); err != nil {
-		return err
-	}
 	return nil
 }
 

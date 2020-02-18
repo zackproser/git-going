@@ -64,7 +64,12 @@ var createCmd = &cobra.Command{
 
 			// Get the SSH URL for setting the local repository's remote URL
 			if repository.GetSSHURL() != "" {
-				scaffold.AddRemoteOrigin(projectSlug, repository.GetSSHURL())
+				originAddErr := scaffold.AddRemoteOrigin(projectSlug, repository.GetSSHURL())
+				if originAddErr != nil {
+					log.WithFields(logrus.Fields{
+						"Error": originAddErr,
+					}).Debug("Error adding remote origin")
+				}
 			} else {
 				log.WithFields(logrus.Fields{
 					"Error": errors.New("Repository SSH URL is empty"),
