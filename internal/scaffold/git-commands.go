@@ -5,6 +5,8 @@ import (
 	"os/exec"
 )
 
+// PushRepo executes a git push command to push up
+// all local files that were scaffolded
 func PushRepo(fp string) error {
 	cmdString := []string{"push", "origin", "master"}
 	cmd := exec.Command("git", cmdString...)
@@ -16,6 +18,7 @@ func PushRepo(fp string) error {
 	return nil
 }
 
+// AddRemoteOrigin sets the URL for the 'origin' remote
 func AddRemoteOrigin(fp, url string) error {
 	cmdString := []string{"remote", "add", "origin", url}
 	cmd := exec.Command("git", cmdString...)

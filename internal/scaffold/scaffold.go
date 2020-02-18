@@ -8,6 +8,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Create handles the initial local filesystem setup
+// including creating the directory, initializing git,
+// rendering initial files, etc
 func Create(name, slug string, log *logrus.Logger) error {
 	if collisionErr := filenameCollisionCheck(slug, name); collisionErr != nil {
 		log.WithFields(logrus.Fields{

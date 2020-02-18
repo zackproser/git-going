@@ -23,6 +23,7 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+// Execute is the entrypoint to the application
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

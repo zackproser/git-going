@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	//A valid GitHub Personal access token
 	GITHUB_API_TOKEN string
 )
 
@@ -20,6 +21,8 @@ func init() {
 	GITHUB_API_TOKEN = val
 }
 
+// CreateRepo makes an API into GitHub to create a new
+// repository using the project slug
 func CreateRepo(name string) (*github.Repository, error) {
 
 	ctx := context.Background()
