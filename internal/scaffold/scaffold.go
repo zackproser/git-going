@@ -96,6 +96,28 @@ func copyFile(src, dst string) (int64, error) {
 	return nBytes, err
 }
 
+func PushRepo(fp string) error {
+	cmdString := []string{"push", "origin", "master"}
+	cmd := exec.Command("git", cmdString...)
+	cmd.Dir = fp
+
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("git output %v, stderr: %v", out, err.Error())
+	}
+	return nil
+}
+
+func AddRemoteOrigin(fp, url string) error {
+	cmdString := []string{"remote", "add", "origin", url}
+	cmd := exec.Command("git", cmdString...)
+	cmd.Dir = fp
+
+	if out, err := cmd.CombinedOutput(); err != nil {
+		return fmt.Errorf("git output: %v, stderr: %v", out, err.Error())
+	}
+	return nil
+}
+
 func gitCommit(fp, commitMsg string) error {
 	cmdString := []string{"commit", "-m", commitMsg}
 	cmd := exec.Command("git", cmdString...)

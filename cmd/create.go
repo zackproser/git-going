@@ -1,15 +1,18 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
 	"strings"
 
-	"github.com/sirupsen/logrus"
+	scaffold "github.com/zackproser/git-going/internal/scaffold"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	scaffold "github.com/zackproser/git-going/pkg"
+
+	github "github.com/zackproser/git-going/internal/github"
 )
 
 func init() {
@@ -47,6 +50,33 @@ var createCmd = &cobra.Command{
 				log.WithFields(logrus.Fields{
 					"Error": scaffoldErr,
 				}).Debug("Error scaffolding new project")
+				return
+			}
+
+			repository, remoteRepoCreateErr := github.CreateRepo(projectSlug)
+
+			if remoteRepoCreateErr != nil {
+				log.WithFields(logrus.Fields{
+					"Error": remoteRepoCreateErr,
+				}).Debug("Error creating remote repository")
+				return
+			}
+
+			// Get the SSH URL for setting the local repository's remote URL
+			if repository.GetSSHURL() != "" {
+				scaffold.AddRemoteOrigin(projectSlug, repository.GetSSHURL())
+			} else {
+				log.WithFields(logrus.Fields{
+					"Error": errors.New("Repository SSH URL is empty"),
+				}).Debug("Error retrieving SSH URL from created remote repo")
+			}
+
+			// Push the local repository to the created remote
+			pushErr := scaffold.PushRepo(projectSlug)
+			if pushErr != nil {
+				log.WithFields(logrus.Fields{
+					"Error": pushErr,
+				}).Debug("Error pushing local repository to remote")
 			}
 		}
 	},
