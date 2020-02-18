@@ -8,11 +8,11 @@ Git-going is a simple command line tool that lets you start your next project ve
 You need only provide a new project name and gitgoing will: 
 
 * Create a local directory, ensuring no filename / project conflicts
-* Initializes it as a git repo 
-* Creates a remote github repo named accordingly
-* Sets the remote origin for the local repository 
-* Generates boilerplate for a README, LICENSE, .gitignore, etc
-* Creates the initial commit and pushes everything to the remote origin
+* Initialize it as a git repo 
+* Create a remote github repo named accordingly
+* Set the remote origin for the local repository 
+* Generate boilerplate for a README, LICENSE, .gitignore, etc
+* Create the initial commit and pushes everything to the remote origin
 
 At this point, you should be able to get coding immediately.
 
