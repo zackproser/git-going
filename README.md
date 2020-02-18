@@ -15,9 +15,8 @@ You need only provide a new project name and gitgoing will:
 * Create a remote github repo named accordingly
 * Set the remote origin for the local repository 
 * Generate boilerplate for a README, LICENSE, .gitignore, etc
-* Create the initial commit and pushes everything to the remote origin
-
-At this point, you should be able to get coding immediately.
+* Create the initial commit
+* Push to the remote origin, setting upstream tracking
 
 ## Getting started 
 
