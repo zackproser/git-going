@@ -1,4 +1,5 @@
-# Git Going  
+![gitgoing logo](./doc/GITGOING.png)
+
 A git repository scaffolding utility that I am writing for myself.
 
 ## Overview
