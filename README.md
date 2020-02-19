@@ -32,6 +32,8 @@ Aspirationally, this tool will create the ideal starting point for a Golang proj
 
 ## Getting started 
 
+### Install via go get 
+
 Install the CLI: 
 `go install github.com/zackproser/git-going`
 
@@ -44,6 +46,22 @@ should output something like:
 `/home/zachary/go/bin/git-going`
 
 If it doesn't, you need to check your `GOPATH` env variables and ensure your go installation can find packages installed via `go install`. Check out [this guide on configuring your GOPATH](https://github.com/golang/go/wiki/SettingGOPATH) for more information. 
+
+### Install binary directly 
+
+Visit [this project's Releases](https://github.com/zackproser/git-going/releases) and download the latest binary for your platform. 
+
+Then extract the archive and move the binary somewhere within your `GOPATH`: 
+
+```
+tar xvzf ~/Downloads/git-going_1.1.0_Linux_x86_64.tar.gz -C ~/Downloads/git-going_1.1.0
+cp ~/Downloads/git-going_1.1.0/git-going ~/go/bin/
+```
+Verify your installation: 
+
+```
+git-going help
+```
 
 ### Authentication 
 
