@@ -18,6 +18,16 @@ You need only provide a new project name and git-going will:
 * Create the initial commit
 * Push to the remote origin, setting upstream tracking
 
+## Roadmap
+
+Aspirationally, this tool will create the ideal starting point for a Golang project with a single command. This includes: 
+
+* GitHub repository continuous integration configuration
+* GitHub actions configuration
+* GitHub release automation configuration
+* Readme badges for go report card, builds, etc 
+* Boilerplate CLI project setup, generated GO, project layout, etc 
+
 ## Getting started 
 
 Install the CLI: 
