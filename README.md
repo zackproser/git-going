@@ -1,5 +1,6 @@
-![gitgoing logo](./doc/GITGOING.png)
+![gitgoing logo](./doc/GITGOING.png) 
 
+[![CodeFactor](https://www.codefactor.io/repository/github/zackproser/git-going/badge)](https://www.codefactor.io/repository/github/zackproser/git-going)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zackproser/git-going)](https://goreportcard.com/report/github.com/zackproser/git-going)
 
 A git repository scaffolding utility that I am writing for myself.
