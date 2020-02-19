@@ -1,5 +1,6 @@
 ![gitgoing logo](./doc/GITGOING.png) 
 
+[![GoDoc](https://godoc.org/github.com/zackproser/git-going?status.svg)](https://godoc.org/github.com/zackproser/git-going)
 [![CodeFactor](https://www.codefactor.io/repository/github/zackproser/git-going/badge)](https://www.codefactor.io/repository/github/zackproser/git-going)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zackproser/git-going)](https://goreportcard.com/report/github.com/zackproser/git-going)
 
