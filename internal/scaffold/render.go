@@ -9,11 +9,8 @@ import (
 )
 
 func renderLicenseFile(fp string) error {
-	paths := []string{
-		"./data/LICENSE.tpl",
-	}
 
-	t := template.Must(template.New("LICENSE.tpl").ParseFiles(paths...))
+	t := template.Must(template.New("LICENSE.tpl").Parse(LicenseTemplate))
 	destination, err := os.Create(fmt.Sprintf("./%s/LICENSE", fp))
 	if err != nil {
 		return err
@@ -33,11 +30,8 @@ func renderLicenseFile(fp string) error {
 }
 
 func renderReadmeFile(name, fp string) error {
-	paths := []string{
-		"./data/README.tpl",
-	}
 
-	t := template.Must(template.New("README.tpl").ParseFiles(paths...))
+	t := template.Must(template.New("README.tpl").Parse(ReadmeTemplate))
 	destination, err := os.Create(fmt.Sprintf("./%s/README.md", fp))
 	if err != nil {
 		return err

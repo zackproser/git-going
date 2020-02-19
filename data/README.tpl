@@ -1,6 +1,0 @@
-# {{ .ProjectName }}
-
-# Overview 
-
-# Getting Started 
-
