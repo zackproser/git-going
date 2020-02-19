@@ -8,7 +8,7 @@ A git repository scaffolding utility that I am writing for myself.
 
 Git-going is a simple command line tool that lets you start your next project very quickly. It automates the tedious manual steps of starting a new GitHub hosted project. 
 
-You need only provide a new project name and gitgoing will: 
+You need only provide a new project name and git-going will: 
 
 * Create a local directory, ensuring no filename / project conflicts
 * Initialize it as a git repo 
@@ -39,7 +39,7 @@ You need to generate a new GitHub Personal access token. [Read more about access
 
 Your token needs sufficient permissions to create repositories on your behalf. 
 
-Once you have generated your token, you need to export it as the environment variable `GIT_GOING_GITHUB_TOKEN.` The gitgoing CLI will panic if you don't have this variable set. 
+Once you have generated your token, you need to export it as the environment variable `GIT_GOING_GITHUB_TOKEN.` The git-going CLI will panic if you don't have this variable set. 
 
 ## Usage 
 
