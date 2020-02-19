@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func renderLicenseFile(fp string) error {
+func renderLicenseFile(fp, author string) error {
 
 	t := template.Must(template.New("LICENSE.tpl").Parse(LicenseTemplate))
 	destination, err := os.Create(fmt.Sprintf("./%s/LICENSE", fp))
@@ -19,7 +19,7 @@ func renderLicenseFile(fp string) error {
 
 	ld := &LicenseData{
 		CopyrightYear: strconv.Itoa(time.Now().Year()),
-		Author:        "Zack Proser",
+		Author:        author,
 	}
 
 	if renderErr := t.Execute(destination, ld); renderErr != nil {

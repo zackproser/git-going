@@ -5,6 +5,20 @@ import (
 	"os/exec"
 )
 
+// GetGitUserName attempts to read the author name from git config
+func GetGitUserName(fp string) (string, error) {
+	cmdString := []string{"config", "user.name"}
+	cmd := exec.Command("git", cmdString...)
+	cmd.Dir = fp
+
+	out, err := cmd.CombinedOutput()
+
+	if err != nil {
+		return "", fmt.Errorf("git output %v, stderr: %v", out, err.Error())
+	}
+	return string(out), nil
+}
+
 // PushRepo executes a git push command to push up
 // all local files that were scaffolded
 func PushRepo(fp string) error {

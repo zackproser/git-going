@@ -40,12 +40,25 @@ var createCmd = &cobra.Command{
 			fmt.Println("You must provide a unique project name to create a new project")
 			os.Exit(1)
 		}
+
+		// If author name was not supplied, attempt to look it up via git config
+		if authorName == "" {
+			userName, getUserErr := scaffold.GetGitUserName(projectSlug)
+			if getUserErr != nil || userName == "" {
+				log.WithFields(logrus.Fields{
+					"Error": getUserErr,
+				}).Debug("Error looking up username via git config")
+				authorName = "Unknown"
+			}
+			authorName = userName
+		}
+
 		// If user doesn't provide a project slug, convert the project name
 		// to a suitable slug
 		if projectSlug == "" {
 			projectSlug = convertProjectNameToSlug(projectName)
 			log.Debug(fmt.Sprintf("Converted %s to slug: %s", projectName, projectSlug))
-			scaffoldErr := scaffold.Create(projectName, projectSlug, log)
+			scaffoldErr := scaffold.Create(projectName, projectSlug, authorName, log)
 			if scaffoldErr != nil {
 				log.WithFields(logrus.Fields{
 					"Error": scaffoldErr,

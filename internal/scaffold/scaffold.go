@@ -11,7 +11,7 @@ import (
 // Create handles the initial local filesystem setup
 // including creating the directory, initializing git,
 // rendering initial files, etc
-func Create(name, slug string, log *logrus.Logger) error {
+func Create(name, slug, author string, log *logrus.Logger) error {
 	if collisionErr := filenameCollisionCheck(slug, name); collisionErr != nil {
 		log.WithFields(logrus.Fields{
 			"Error":   collisionErr,
@@ -43,7 +43,7 @@ func Create(name, slug string, log *logrus.Logger) error {
 		}).Debug("renderReadmeFile failed")
 	}
 
-	if licenseErr := renderLicenseFile(slug); licenseErr != nil {
+	if licenseErr := renderLicenseFile(slug, author); licenseErr != nil {
 		log.WithFields(logrus.Fields{
 			"Error":   licenseErr,
 			"Context": "Rendering LICENSE template file to repo",

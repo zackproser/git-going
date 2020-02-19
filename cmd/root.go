@@ -11,6 +11,7 @@ import (
 var (
 	projectName string
 	projectSlug string
+	authorName  string
 	log         = logrus.New()
 )
 
@@ -38,6 +39,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(&projectName, "name", "n", "", "The human legible name for your new project (Used in titles, etc)")
 	rootCmd.PersistentFlags().StringVarP(&projectSlug, "slug", "s", "", "project slug (for URLs / Directory names)")
-
+	rootCmd.PersistentFlags().StringVarP(&authorName, "author", "a", "", "The Author's name to use in attribution")
 	rootCmd.AddCommand()
 }
